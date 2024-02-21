@@ -1,5 +1,7 @@
 from logging import getLogger
-from fastapi import APIRouter, Query
+
+from fastapi import APIRouter
+from fastapi import Query
 
 from config.settings import settings
 from db.es import es_conn
@@ -13,9 +15,9 @@ update_router = APIRouter()
 
 @update_router.post("/", response_model=dict)
 async def update(
-        id: str = Query(None),
-        question: str = Query(None),
-        answer: str = Query(None),
+    id: str = Query(None),
+    question: str = Query(None),
+    answer: str = Query(None),
 ):
     """Update new document"""
     document = {

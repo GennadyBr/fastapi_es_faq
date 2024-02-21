@@ -1,6 +1,7 @@
 from logging import getLogger
 
-from fastapi import APIRouter, Query
+from fastapi import APIRouter
+from fastapi import Query
 
 from config.settings import settings
 from db.es import es_conn
@@ -14,8 +15,8 @@ register_router = APIRouter()
 
 @register_router.post("/", response_model=dict)
 async def register(
-        question: str = Query(None),
-        answer: str = Query(None),
+    question: str = Query(None),
+    answer: str = Query(None),
 ):  # body: UserCreate, db: AsyncSession = Depends(get_db)) -> str:
     """Creates new document"""
     document = {

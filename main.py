@@ -1,16 +1,20 @@
 import os
-import uvicorn
 from logging import getLogger
+
+import uvicorn
 from dotenv import load_dotenv
-from fastapi import FastAPI, APIRouter, HTTPException, Request
+from fastapi import APIRouter
+from fastapi import FastAPI
+from fastapi import HTTPException
+from fastapi import Request
 from fastapi.middleware.cors import CORSMiddleware
 from starlette.responses import JSONResponse
 
-from api.v1.register_router import register_router
-from api.v1.update_router import update_router
 from api.v1.delete_router import delete_router
-from api.v1.search_router import search_router
 from api.v1.get_all_router import get_all_router
+from api.v1.register_router import register_router
+from api.v1.search_router import search_router
+from api.v1.update_router import update_router
 from config.logging_setup import LoggerSetup
 
 logger_setup = LoggerSetup()
@@ -20,8 +24,8 @@ load_dotenv()
 app = FastAPI(
     debug=True,
     version="0.0.1",
-    docs_url=f"/docs",
-    openapi_url=f"/openapi.json",
+    docs_url="/docs",
+    openapi_url="/openapi.json",
     title="FastAPI - ElasticSearch API",
 )
 
@@ -51,29 +55,19 @@ app.add_middleware(
 main_api_router = APIRouter()
 
 #     1. Добавление вопросов и ответов в базу данных ElasticSearch.
-main_api_router.include_router(
-    register_router, prefix="/register", tags=["register"]
-)
+main_api_router.include_router(register_router, prefix="/register", tags=["register"])
 
 #     2. Изменение вопросов и ответов в базу данных ElasticSearch.
-main_api_router.include_router(
-    update_router, prefix="/update", tags=["update"]
-)
+main_api_router.include_router(update_router, prefix="/update", tags=["update"])
 
 #     3. Удаление вопросов и ответов в базу данных ElasticSearch.
-main_api_router.include_router(
-    delete_router, prefix="/delete", tags=["delete"]
-)
+main_api_router.include_router(delete_router, prefix="/delete", tags=["delete"])
 
 #     4. Полнотекстовый поиск вопросов в базе данных ElasticSearch.
-main_api_router.include_router(
-    search_router, prefix="/search", tags=["search"]
-)
+main_api_router.include_router(search_router, prefix="/search", tags=["search"])
 
 #     5. Все данные из базы
-main_api_router.include_router(
-    get_all_router, prefix="/get_all", tags=["get_all"]
-)
+main_api_router.include_router(get_all_router, prefix="/get_all", tags=["get_all"])
 
 app.include_router(main_api_router)
 
@@ -89,4 +83,4 @@ async def shutdown():
 
 
 if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=int(os.getenv('APP_PORT')))
+    uvicorn.run(app, host="0.0.0.0", port=int(os.getenv("APP_PORT")))
