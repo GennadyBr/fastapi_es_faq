@@ -18,8 +18,14 @@ async def update(
     id: str = Query(None),
     question: str = Query(None),
     answer: str = Query(None),
-):
-    """Update new document"""
+) -> dict:
+    """
+    Update record in Elasticsearch cluster by id parameter
+    :param id: str
+    :param question: str
+    :param answer: str
+    :return: dict
+    """
     document = {
         "question": question,
         "answer": answer,

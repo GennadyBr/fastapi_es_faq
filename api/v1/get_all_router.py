@@ -19,7 +19,12 @@ async def get_all(
     pagination_size: int = Query(None, description="кол-во ответов на странице"),
     pagination_from: int = Query(None, description="номер начального ответа"),
 ) -> list:
-    """Getting all data from the database"""
+    """
+    Get all records from Elasticsearch cluster by pagination parameters
+    :param pagination_size: int
+    :param pagination_from: int
+    :return: list of dicts
+    """
     body = {
         "size": pagination_size,
         "from": pagination_from,

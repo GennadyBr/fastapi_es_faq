@@ -11,7 +11,6 @@ LOGGER = getLogger(__name__)
 
 search_router = APIRouter()
 
-LOGGER = getLogger(__name__)
 es = es_conn()
 index_name = settings["index_name"]
 
@@ -22,7 +21,13 @@ async def search_question(
     pagination_size: int = Query(None, description="кол-во ответов на странице"),
     pagination_from: int = Query(None, description="номер начального ответа"),
 ) -> list:
-    """Search by question"""
+    """
+    Search by question
+    :param question_text:
+    :param pagination_size:
+    :param pagination_from:
+    :return: list
+    """
     result = await search_by_field(
         question_text, pagination_size, pagination_from, search_field="question"
     )
@@ -31,11 +36,17 @@ async def search_question(
 
 @search_router.get("/answer", response_model=list)
 async def search_answer(
-    question_text=Query(..., description="задайте поиск по ответам"),
+    question_text: str = Query(..., description="задайте поиск по ответам"),
     pagination_size: int = Query(None, description="кол-во ответов на странице"),
     pagination_from: int = Query(None, description="номер начального ответа"),
 ) -> list:
-    """Search by answer"""
+    """
+    Search by answer
+    :param question_text: str
+    :param pagination_size: int
+    :param pagination_from: int
+    :return: list
+    """
     result = await search_by_field(
         question_text, pagination_size, pagination_from, search_field="answer"
     )

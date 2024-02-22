@@ -16,7 +16,11 @@ delete_router = APIRouter()
 @delete_router.delete("/", response_model=dict)
 async def delete(
     id: str = Query(None),
-):  # body: UserCreate, db: AsyncSession = Depends(get_db)) -> str:
-    """Delete by id"""
+) -> dict:
+    """
+    Delete record from Elasticsearch cluster by id parameter
+    :param id: str
+    :return: dict
+    """
     response = es.delete(index=index_name, id=id)
     return response

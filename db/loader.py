@@ -4,7 +4,7 @@ from logging import getLogger
 
 from dotenv import load_dotenv
 from elasticsearch import ApiError
-from elasticsearch import NotFoundError
+from elasticsearch import NotFoundError, Elasticsearch
 
 from config.logging_setup import LoggerSetup
 from config.settings import settings
@@ -15,7 +15,13 @@ logger_setup = LoggerSetup()
 LOGGER = getLogger(__name__)
 
 
-def _load_data(es, index_name):
+def _load_data(es: Elasticsearch, index_name: str) -> None:
+    """
+    Load data from csv file to Elasticsearch cluster by index_name parameter
+    :param es: Elasticsearch
+    :param index_name: str
+    :return: None
+    """
     try:
         with open(settings["csv_file"], "r") as f:
             reader = csv.reader(f, delimiter=settings["delimiter"])
@@ -32,7 +38,13 @@ def _load_data(es, index_name):
     LOGGER.info("LOADING COMPLETED")
 
 
-def _check_index(index_name):
+def _check_index(index_name: str) -> None:
+    """
+    Check index in Elasticsearch cluster by index_name parameter
+    :param es: Elasticsearch
+    :param index_name: str
+    :return: None
+    """
     if not es.indices.exists(index=index_name):
         try:
             with open(settings["index_file"], "r") as index_file:
@@ -42,7 +54,13 @@ def _check_index(index_name):
             LOGGER.error(f"""CAN'T FIND {settings["index_file"]}, {err=}""")
 
 
-def _check_is_data(index_name, es):
+def _check_is_data(index_name: str, es: Elasticsearch) -> None:
+    """
+    Check is data in Elasticsearch cluster by index_name parameter
+    :param es: Elasticsearch
+    :param index_name: str
+    :return: None
+    """
     try:
         doc_count = es.count(index=index_name)["count"]
     except NotFoundError as err:

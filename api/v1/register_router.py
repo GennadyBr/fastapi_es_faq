@@ -17,8 +17,13 @@ register_router = APIRouter()
 async def register(
     question: str = Query(None),
     answer: str = Query(None),
-):  # body: UserCreate, db: AsyncSession = Depends(get_db)) -> str:
-    """Creates new document"""
+) -> dict:
+    """
+    Add new record to Elasticsearch cluster
+    :param question: str
+    :param answer: str
+    :return: dict
+    """
     document = {
         "question": question,
         "answer": answer,

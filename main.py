@@ -32,13 +32,25 @@ app = FastAPI(
 
 # Обработка ошибок HTTPException
 @app.exception_handler(HTTPException)
-async def http_exception_handler(request, exc):
+async def http_exception_handler(request, exc) -> JSONResponse:
+    """
+    Обработка ошибок HTTPException
+    :param request:
+    :param exc:
+    :return: JSONResponse
+    """
     return JSONResponse(content={"error": exc.detail}, status_code=exc.status_code)
 
 
 # Middleware для логирования запросов
 @app.middleware("http")
-async def log_requests(request: Request, call_next):
+async def log_requests(request: Request, call_next) -> JSONResponse:
+    """
+    Middleware для логирования запросов
+    :param request: Request
+    :param call_next:
+    :return: JSONResponse
+    """
     LOGGER.info(f"REQUEST METHOD {request.method} {request.url}")
     response = await call_next(request)
     return response
