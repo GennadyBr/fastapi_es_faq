@@ -1,3 +1,15 @@
+"""
+db/loader.py
+
+Load data from csv file to Elasticsearch cluster
+    Check and create index in Elasticsearch cluster by index_name parameter
+
+    Check is data in Elasticsearch cluster by index_name parameter
+
+    Load data from csv file to Elasticsearch cluster by index_name parameter
+
+
+"""
 import csv
 import json
 from logging import getLogger
@@ -15,11 +27,14 @@ logger_setup = LoggerSetup()
 LOGGER = getLogger(__name__)
 
 
-def _load_data(es: Elasticsearch, index_name: str) -> None:
+def load_data(es: Elasticsearch, index_name: str) -> None:
     """
     Load data from csv file to Elasticsearch cluster by index_name parameter
+
     :param es: Elasticsearch
+
     :param index_name: str
+
     :return: None
     """
     try:
@@ -38,11 +53,12 @@ def _load_data(es: Elasticsearch, index_name: str) -> None:
     LOGGER.info("LOADING COMPLETED")
 
 
-def _check_index(index_name: str) -> None:
+def check_index(index_name: str) -> None:
     """
-    Check index in Elasticsearch cluster by index_name parameter
-    :param es: Elasticsearch
+    Check and create index in Elasticsearch cluster by index_name parameter
+
     :param index_name: str
+
     :return: None
     """
     if not es.indices.exists(index=index_name):
@@ -54,11 +70,14 @@ def _check_index(index_name: str) -> None:
             LOGGER.error(f"""CAN'T FIND {settings["index_file"]}, {err=}""")
 
 
-def _check_is_data(index_name: str, es: Elasticsearch) -> None:
+def check_is_data(index_name: str, es: Elasticsearch) -> None:
     """
     Check is data in Elasticsearch cluster by index_name parameter
+
     :param es: Elasticsearch
+
     :param index_name: str
+
     :return: None
     """
     try:
@@ -69,7 +88,7 @@ def _check_is_data(index_name: str, es: Elasticsearch) -> None:
             f"lets start loading new data into new index "
             f"{err}"
         )
-        _load_data(es=es, index_name=index_name)
+        load_data(es=es, index_name=index_name)
     except AttributeError as err:
         LOGGER.error(f"doc_count {err}")
     except ApiError as err:
@@ -79,7 +98,7 @@ def _check_is_data(index_name: str, es: Elasticsearch) -> None:
         )
     else:
         if not doc_count:
-            _load_data(es=es, index_name=index_name)
+            load_data(es=es, index_name=index_name)
         else:
             LOGGER.info(f"Elasticsearch contains {doc_count} docs")
 
@@ -87,7 +106,7 @@ def _check_is_data(index_name: str, es: Elasticsearch) -> None:
 if __name__ == "__main__":
     es = es_conn()
     index_name = settings["index_name"]
-    _check_index(index_name=index_name)
-    _check_is_data(index_name=index_name, es=es)
+    check_index(index_name=index_name)
+    check_is_data(index_name=index_name, es=es)
 
     # docker exec elastic_5 curl -X DELETE 'http://localhost:9200/faq'

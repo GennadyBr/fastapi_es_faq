@@ -1,3 +1,13 @@
+"""
+db/es.py
+
+ElasticSearch cluster and CSV file
+    Connect to Elasticsearch cluster
+
+    Search results from Elasticsearch cluster by body dict with size and from parameters
+
+    Search by field in Elasticsearch cluster by field question or answer or both question and answer
+"""
 import os
 from logging import getLogger
 from time import sleep
@@ -16,6 +26,7 @@ index_name = settings["index_name"]
 def es_conn() -> Elasticsearch:
     """
     Connect to Elasticsearch cluster
+
     :return: Elasticsearch object
     """
     url = f"http://{os.getenv('ES_HOST')}:{int(os.getenv('ES_PORT'))}"
@@ -37,7 +48,9 @@ def es_conn() -> Elasticsearch:
 async def search_result(body: dict) -> list[dict]:
     """
     Search results from Elasticsearch cluster by body dict with size and from parameters
+
     :param body: dict
+
     :return: list of dicts
     """
     es = es_conn()
@@ -66,10 +79,15 @@ async def search_by_field(
 ) -> list[dict]:
     """
     Search by field in Elasticsearch cluster by field question or answer or both question and answer
+
     :param question_text: str
+
     :param pagination_size: int
+
     :param pagination_from: int
+
     :param search_field: str
+
     :return: list of dicts with search results from Elasticsearch cluster by field question or answer or both question and answer
     """
     body = {

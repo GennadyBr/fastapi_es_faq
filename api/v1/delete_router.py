@@ -1,3 +1,9 @@
+"""
+api/v1/delete_router.py
+
+Delete record from Elasticsearch cluster by id parameter
+
+"""
 from logging import getLogger
 
 from fastapi import APIRouter
@@ -19,7 +25,9 @@ async def delete(
 ) -> dict:
     """
     Delete record from Elasticsearch cluster by id parameter
+
     :param id: str
+
     :return: dict
     """
     response = es.delete(index=index_name, id=id)

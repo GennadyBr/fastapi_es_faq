@@ -1,3 +1,33 @@
+"""
+main.py
+
+FastAPI - ElasticSearch API
+    Обработка ошибок HTTPException
+    Middleware для логирования запросов
+    ROUTERs
+        #     1. Добавление вопросов и ответов в базу данных ElasticSearch.
+
+        main_api_router.include_router(register_router, prefix="/register", tags=["register"])
+
+        #     2. Изменение вопросов и ответов в базу данных ElasticSearch.
+
+        main_api_router.include_router(update_router, prefix="/update", tags=["update"])
+
+        #     3. Удаление вопросов и ответов в базу данных ElasticSearch.
+
+        main_api_router.include_router(delete_router, prefix="/delete", tags=["delete"])
+
+        #     4. Полнотекстовый поиск вопросов в базе данных ElasticSearch.
+
+        main_api_router.include_router(search_router, prefix="/search", tags=["search"])
+
+        #     5. Все данные из базы
+
+        main_api_router.include_router(get_all_router, prefix="/get_all", tags=["get_all"])
+
+
+"""
+
 import os
 from logging import getLogger
 
@@ -35,8 +65,11 @@ app = FastAPI(
 async def http_exception_handler(request, exc) -> JSONResponse:
     """
     Обработка ошибок HTTPException
+
     :param request:
+
     :param exc:
+
     :return: JSONResponse
     """
     return JSONResponse(content={"error": exc.detail}, status_code=exc.status_code)
@@ -47,8 +80,11 @@ async def http_exception_handler(request, exc) -> JSONResponse:
 async def log_requests(request: Request, call_next) -> JSONResponse:
     """
     Middleware для логирования запросов
+
     :param request: Request
+
     :param call_next:
+
     :return: JSONResponse
     """
     LOGGER.info(f"REQUEST METHOD {request.method} {request.url}")

@@ -1,3 +1,10 @@
+"""
+api/v1/register_router.py
+
+Add new record of question and answer to Elasticsearch cluster
+
+"""
+
 from logging import getLogger
 
 from fastapi import APIRouter
@@ -20,8 +27,11 @@ async def register(
 ) -> dict:
     """
     Add new record to Elasticsearch cluster
+
     :param question: str
+
     :param answer: str
+
     :return: dict
     """
     document = {

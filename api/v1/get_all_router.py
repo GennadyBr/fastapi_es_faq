@@ -1,3 +1,9 @@
+"""
+api/v1/get_all_router.py
+
+Get all records from Elasticsearch cluster by pagination parameters
+
+"""
 from logging import getLogger
 
 from fastapi import APIRouter
@@ -21,8 +27,11 @@ async def get_all(
 ) -> list:
     """
     Get all records from Elasticsearch cluster by pagination parameters
+
     :param pagination_size: int
+
     :param pagination_from: int
+
     :return: list of dicts
     """
     body = {

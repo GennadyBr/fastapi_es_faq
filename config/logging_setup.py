@@ -1,3 +1,7 @@
+"""
+Logging setup console and file handlers log/fastapi_elk.log
+
+"""
 import logging.handlers
 
 
@@ -12,6 +16,7 @@ class LoggerSetup:
     def setup_logging(self) -> None:
         """
         Logging setup console and file handlers log/fastapi_elk.log
+
         :return: None
         """
 

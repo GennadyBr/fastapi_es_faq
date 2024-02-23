@@ -1,3 +1,11 @@
+"""
+api/v1/search_router.py
+
+Search by question
+
+Search by answer
+
+"""
 from logging import getLogger
 
 from fastapi import APIRouter
@@ -23,9 +31,13 @@ async def search_question(
 ) -> list:
     """
     Search by question
+
     :param question_text:
+
     :param pagination_size:
+
     :param pagination_from:
+
     :return: list
     """
     result = await search_by_field(
@@ -42,9 +54,13 @@ async def search_answer(
 ) -> list:
     """
     Search by answer
+
     :param question_text: str
+
     :param pagination_size: int
+
     :param pagination_from: int
+
     :return: list
     """
     result = await search_by_field(

@@ -1,3 +1,10 @@
+"""
+api/v1/update_router.py
+
+Update record in Elasticsearch cluster by id parameter
+
+"""
+
 from logging import getLogger
 
 from fastapi import APIRouter
@@ -21,9 +28,13 @@ async def update(
 ) -> dict:
     """
     Update record in Elasticsearch cluster by id parameter
+
     :param id: str
+
     :param question: str
+
     :param answer: str
+
     :return: dict
     """
     document = {
