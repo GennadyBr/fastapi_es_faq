@@ -1,3 +1,10 @@
+"""
+config/settings.py
+
+Settings for ElasticSearch cluster and CSV file
+"""
+
+
 settings = {
     "index_file": "es_index.json",
     "index_name": "faq",

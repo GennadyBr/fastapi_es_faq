@@ -1,13 +1,25 @@
+"""
+Logging setup console and file handlers log/fastapi_elk.log
+
+"""
 import logging.handlers
 
 
 class LoggerSetup:
+    """
+    Logging setup console and file handlers
+    """
     def __init__(self) -> None:
         self.logger = logging.getLogger("")
         self.setup_logging()
 
     def setup_logging(self) -> None:
-        """Logging setup console and file handlers log/fastapi_elk.log"""
+        """
+        Logging setup console and file handlers log/fastapi_elk.log
+
+        :return: None
+        """
+
         # define log format
         LOG_FORMAT = "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
         logging.basicConfig(level=logging.INFO, format=LOG_FORMAT)
